@@ -1,5 +1,7 @@
 package net.cnr.studentManagement.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,29 +34,42 @@ public class TeacherManagementController {
 		
 		Teacher nTeacher = new Teacher();
 		nTeacher.setActive(true);
-		mv.addObject("teacherModel",nTeacher);//link with teacherModel with spring form
+		mv.addObject("teacherModel" ,nTeacher);//link with teacherModel with spring form
 		
 		if(operation!=null){
 			if(operation.equals("teacher")){
 				mv.addObject("message","Teacher Registered Successfully!!");
 			}
-			else if(operation.equals("uTeacher")){
+			if(operation.equals("uTeacher")){
 				mv.addObject("message","Teacher Updated Successfully!!");
 			}
-			
+				
 		}
 		
 		return mv;
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String handleTeacherRegistraion( @ModelAttribute("teacherModel") Teacher mTeacher,BindingResult result,Model model){
+	//capable only handle new product
+	@RequestMapping(value="/manage", method=RequestMethod.POST)
+	public String handleTeacherRegistraion(@Valid @ModelAttribute("teacherModel") Teacher mTeacher , BindingResult result , Model model){
 		
 		
 		
-		teacherDao.add(mTeacher);
 		
-		return "redirect:/teacher/manage?operation=teacher";
+		
+		if(mTeacher.getId()==0){
+			teacherDao.add(mTeacher);
+			System.out.println("Save Operation");
+			return "redirect:/teacher/manage?operation=teacher";
+		}else{
+			teacherDao.update(mTeacher);
+			System.out.println("Update Operation");
+			return "redirect:/teacher/manage?operation=uTeacher";
+		}
+		
+		
+		
+		
 	}
 	
 	
@@ -70,13 +85,13 @@ public class TeacherManagementController {
 		Teacher nTeacher =teacherDao.get(id);
 		
 		
-		mv.addObject("teacherModel",nTeacher);
+		mv.addObject("teacherModel" , nTeacher);
 		
 		
 		return mv;
 		
 	}
-	@RequestMapping(value="/{id}/update",method=RequestMethod.GET)
+	/*@RequestMapping(value="/{id}/update",method=RequestMethod.POST)
 	public String updateTeacherDetails(@PathVariable int id,@ModelAttribute("teacherModel") Teacher mTeacher,BindingResult result,Model model){
 		
 		teacher = teacherDao.get(id);
@@ -91,7 +106,7 @@ public class TeacherManagementController {
 		
 		return "redirect:/teacher/manage?operation=uTeacher";
 		
-	}
+	}*/
 		
 	
 }

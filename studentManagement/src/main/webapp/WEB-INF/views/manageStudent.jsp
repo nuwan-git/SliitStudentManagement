@@ -54,7 +54,7 @@
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-users fa"
 								aria-hidden="true"></i></span>
-							<sf:input type="text" class="form-control" path="email"
+							<sf:input type="email" class="form-control" path="email"
 								id="email" placeholder="Enter your Email" />
 
 						</div>
