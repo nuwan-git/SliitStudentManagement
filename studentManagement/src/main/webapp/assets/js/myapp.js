@@ -14,13 +14,10 @@ $(function() {
 	
 	//----------------------------------------
 		/*jquery validation for teachers*/
-/*	
-	//email validation
-	jQuery.validator.addMethod("emailCustomFormat", function (value, element) {
-        return this.optional(element) || /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/.test(value);
-    }, abp.localization.localize("FormValidationMessageEmail"));
 	
-*/	
+
+	
+	
 		var teacherManagementForm = $('#teacherManagementForm');
 		
 		if(teacherManagementForm.length){
@@ -34,7 +31,7 @@ $(function() {
 				
 					email:{
 						required:true
-		//				emailCustomFormat : true
+	
 					},
 					education:{
 						required:true
@@ -58,8 +55,8 @@ $(function() {
 					},
 					email : {
 						
-						required : 'Please add the Email'
-				//	emailCustomFormat : 'Please add valid email '
+						required : 'Please add the Email',
+					emailCustomFormat : 'Please add valid email '
 					},
 					education : {
 						required : 'Please add the Education Status'

@@ -1,5 +1,7 @@
 package net.cnr.studentManagement.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.cnr.studentManagentBackEnd.dao.DepartmentDao;
 import net.cnr.studentManagentBackEnd.dao.TeacherDao;
+import net.cnr.studentManagentBackEnd.dto.Department;
 import net.cnr.studentManagentBackEnd.dto.Teacher;
 
 @Controller
@@ -22,6 +26,9 @@ public class TeacherManagementController {
 
 	@Autowired
 	private TeacherDao teacherDao;
+	
+	@Autowired
+	private DepartmentDao departmentDao;
 	
 	private static Teacher teacher;
 	
@@ -40,8 +47,11 @@ public class TeacherManagementController {
 			if(operation.equals("teacher")){
 				mv.addObject("message","Teacher Registered Successfully!!");
 			}
-			if(operation.equals("uTeacher")){
+			else if(operation.equals("uTeacher")){
 				mv.addObject("message","Teacher Updated Successfully!!");
+			}
+			else if(operation.equals("department")){
+				mv.addObject("message","Department Submited Successfully!!");
 			}
 				
 		}
@@ -91,6 +101,29 @@ public class TeacherManagementController {
 		return mv;
 		
 	}
+	
+	@ModelAttribute("department")
+	public Department getDepartment() {
+
+		return new Department();
+	}
+	
+	// handle departmentSubmission
+		@RequestMapping(value = "/department/manage", method = RequestMethod.POST)
+		public String handleCategorySubmission(@ModelAttribute Department department) {
+			departmentDao.add(department);
+			return "redirect:/teacher/manage?operation=department";
+		}
+		
+		
+		//return departments for all the request mapping
+		@ModelAttribute("departments")
+		public List<Department> getDepartments(){
+			
+			return departmentDao.list();
+		}
+
+		
 	/*@RequestMapping(value="/{id}/update",method=RequestMethod.POST)
 	public String updateTeacherDetails(@PathVariable int id,@ModelAttribute("teacherModel") Teacher mTeacher,BindingResult result,Model model){
 		
@@ -107,6 +140,9 @@ public class TeacherManagementController {
 		return "redirect:/teacher/manage?operation=uTeacher";
 		
 	}*/
+	
+
+
 		
 	
 }

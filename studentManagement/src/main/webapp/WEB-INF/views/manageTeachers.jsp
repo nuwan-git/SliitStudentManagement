@@ -33,7 +33,7 @@
 								
 						</div>
 					</div>
-					<%-- <sf:errors path="name" cssClass="help-block"/> --%>
+					
 				</div>
 				
 
@@ -47,7 +47,7 @@
 								id="email" placeholder="Enter Teacher Email"></sf:input>
 
 						</div>
-						<%-- <sf:errors path="email" cssClass="help-block"/> --%>
+						
 					</div>
 				</div>
 
@@ -62,7 +62,7 @@
 								id="education" placeholder="Enter Teacher Education Status"></sf:input>
 
 						</div>
-					<%-- 	<sf:errors path="education" cssClass="help-block"/> --%>
+					
 					</div>
 				</div>
 				
@@ -80,25 +80,24 @@
 								placeholder="Enter Teacher Experience Years"></sf:input>
 
 						</div>
-						<%-- <sf:errors path="experienceYears" cssClass="help-block"/> --%>
+						
 					</div>
 				</div>
-
-				<div class="form-group">
-					<label for="password" class="cols-sm-2 control-label">Department
-						Number</label>
-					<div class="cols-sm-10">
-						<div class="input-group">
+				<div class="form-group row">
+							<label class="col-lg-3 col-form-label form-control-label">Select
+								Department</label>
+							<div class="cols-xl-8">
+							<div class="input-group">
 							<span class="input-group-addon"><i
 								class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-					
-								
-								<sf:input type="text" class="form-control" path="departmentId"
-								id="departmentId" placeholder="Enter Teacher Department"></sf:input>
-
+								<sf:select class="form-control" id="departmentId"
+									path="departmentId" items="${departments}" itemLabel="name"
+									itemValue="id">
+									<option value="1">Category One</option>
+									<option value="2">CAtegory Two</option>
+								</sf:select>
+							</div>
 						</div>
-					<%-- 	<sf:errors path="departmentId" cssClass="help-block"/> --%>
-					</div>
 				</div>
 				
 				<div class="form-group ">
@@ -106,14 +105,27 @@
 					<c:if test="${teacherModel.id eq 0 }">
 					<input type="Submit" value="Submit"
 						class="btn btn-success btn-lg float-right" />
-					
+					<button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myDepartmentModel"
+						class="btn btn-success btn-lg float-right">
+						Create Department
+					</button>
 					</c:if>
 					
 					<c:if test="${teacherModel.id ne 0 }">
 					<input type="Submit" value="Update"
 						class="btn btn-success btn-lg float-right" />
 					
+					<button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myDepartmentModel"
+						class="btn btn-success btn-lg float-right">
+							
+							Update Department
+						
+					</button>
+						
+						
+					
 					</c:if>
+					
 					
 						
 					<!-- Hidden fields of Product -->
@@ -182,4 +194,56 @@
 
 </div>
 
-
+<div class="row">
+		<div class ="modal fade" id="myDepartmentModel" role="dialog" tabindex="-1">
+			
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				<!-- Modal Dialog -->
+					<div class="modal-header">
+						<h5 class="modal-title ">Add New Department</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div class="modal-body">
+					<!-- 	category form -->
+					
+					<sf:form id="departmentForm" modelAttribute="department" action="${contextRoot}/teacher/department/manage" method="POST" class="form-horizontal">
+						<div class="form-group">
+							<label for="department_name" class="control-label col-md-4">Department Name</label>
+								<div class="col-md-8">
+									
+									<sf:input type="text" path="name" id="department_name" class="form-control"/>
+								</div>
+						</div>
+								
+						<div class="form-group">
+							<label for="category_description" class="control-label col-md-4">Department Extensions</label>
+								<div class="col-md-8">
+									
+									<sf:input type="text"  path="extension" id="department_extensions" class="form-control"/>
+									
+								</div>
+								</div>
+								
+								<div class="form-group">
+								<div class="col-md-offset-4 col-md-8">
+										<input type="Submit" value="Add Department" class="btn btn-primary"/>
+								</div>
+								</div>
+					
+					</sf:form>
+					
+					</div>
+					 <div class="modal-footer">
+					   
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					 </div>
+				</div>
+			
+			</div>
+		
+		</div>
+	
+</div>	
